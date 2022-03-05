@@ -1,0 +1,19 @@
+class Park {
+    constructor(name, date){
+        this.name = name;
+        this.date = date;
+    }
+
+    describe() {
+        return `I want to visit ${this.name} on ${this.date}.`;
+    }
+}
+
+class Rides {
+    constructor(name){
+        this.name = name;
+        this.rides = [];
+    }
+
+    addRide(ride)
+}
