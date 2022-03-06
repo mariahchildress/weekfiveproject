@@ -1,11 +1,11 @@
 class Park {
-    constructor(name, date){
+    constructor(name){
         this.name = name;
-        this.date = date;
+        this.park = [];
     }
 
     describe() {
-        return `I want to visit ${this.name} on ${this.date}.`;
+        return `I want to visit ${this.name}.`;
     }
 }
 
@@ -13,7 +13,97 @@ class Rides {
     constructor(name){
         this.name = name;
         this.rides = [];
+    } 
+
+    addRide(rides){
+        if (rides instanceof Rides){
+            this.rides.push(rides);
+        } else {
+            throw new Error(`You can only add an instance of Rides.  Argument is not a ride: ${rides}`);
+        }
     }
 
-    addRide(ride)
+    describe(){
+        return `${this.name} has ${this.rides.length} rides.`;
+    }
 }
+
+class Menu {
+    constructor() {
+        this.park = [];
+        this.selectedPark = null;
+    }
+
+    start() {
+        let selection = this.showMainMenuOptions();
+
+        while (selection != 0) {
+            switch (selection) {
+                case '1':
+                    this.createPark();
+                    break;
+                case '2':
+                    this.deletePark();
+                    break;
+                case '3':
+                    this.displayParks();
+                    break;
+                default:
+                    selection = 0;
+            }
+            selection = this.showMainMenuOptions();
+        }
+
+        alert('Goodbye!');
+    }
+
+    showMainMenuOptions() {
+        return prompt(`
+            0) exit
+            1) create park
+            2) delete park
+            3) display all parks
+        `);
+    }
+
+    createPark() {
+        let name = prompt('Enter name of park you wish to visit:');
+        this.parks.push(new Park(name));
+    }
+
+    viewParks() {
+        let index = prompt('Enter the index of the park you wish to view:');
+        if (index > -1 && index < this.park.length) {
+            this.selectedPark = this.park[index];
+            let description = 'Park Name: ' + this.selectedPark.name + '\n';
+
+            for (let i = 0; i < this.selectedPark.park.length; i++) {
+                description += i + ') ' + this.selectedPark.park[i].name + ' - ' + '\n';
+            }
+
+            let selection = this.showParkMenuOptions(description);
+            switch (selection) {
+                case '1':
+                    this.createPark();
+                    break;
+                case '2':
+                    this.deletePark();
+            }
+        }
+    }
+
+    createPark() {
+        let name = prompt('Enter name for new park:');
+        this.selectedPark.park.push(new Park(name));
+    }
+
+    deletePark() {
+        let index =  prompt('Enter the index of the park you wish to delete:');
+        if (index > -1 && index < this.selectedPark.park.length) {
+            this.selectedPark.park.splice(index, 1);
+        }
+    }
+}
+
+let menu = new Menu();
+menu.start();
