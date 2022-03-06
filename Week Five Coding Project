@@ -1,3 +1,5 @@
+// This menu will let the user choose which Disney park they want to visit on a specific date. //
+
 class Park {
     constructor(name){
         this.name = name;
@@ -9,22 +11,22 @@ class Park {
     }
 }
 
-class Rides {
-    constructor(name){
-        this.name = name;
-        this.rides = [];
+class Dates {
+    constructor(date){
+        this.date = date;
+        this.dates = [];
     } 
 
-    addRide(rides){
-        if (rides instanceof Rides){
-            this.rides.push(rides);
+    addDate(dates){
+        if (dates instanceof Dates){
+            this.dates.push(dates);
         } else {
-            throw new Error(`You can only add an instance of Rides.  Argument is not a ride: ${rides}`);
+            throw new Error(`You can only add an instance of Dates.  Argument is not a date: ${date}`);
         }
     }
 
     describe(){
-        return `${this.name} has ${this.rides.length} rides.`;
+        return `${this.date} has ${this.dates.length} options.`;
     }
 }
 
@@ -48,6 +50,9 @@ class Menu {
                 case '3':
                     this.displayParks();
                     break;
+                case '4':
+                    this.chooseDates();
+                    break;
                 default:
                     selection = 0;
             }
@@ -63,6 +68,7 @@ class Menu {
             1) create park
             2) delete park
             3) display all parks
+            4) choose date
         `);
     }
 
@@ -92,9 +98,9 @@ class Menu {
         }
     }
 
-    createPark() {
-        let name = prompt('Enter name for new park:');
-        this.selectedPark.park.push(new Park(name));
+    createDate() {
+        let date = prompt('Enter your new date:');
+        this.selectedPark.park.dates(new Dates(date));
     }
 
     deletePark() {
